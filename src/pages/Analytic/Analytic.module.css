@@ -1,0 +1,64 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.area {
+  align-self: stretch;
+  height: 239px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title {
+  white-space: no-wrap;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.button-block {
+  display: flex;
+  gap: 10px;
+}
+
+.error-text {
+  color: var(--orange-color);
+  font-size: 35px;
+  font-weight: 400;
+}
+
+.file-loaded-text {
+  color: var(--black-color);
+  font-size: 35px;
+  font-weight: 400;
+}
+
+.area-error {
+  border: 1px solid var(--orange-color);
+}
+
+.area-success {
+  border: 1px solid var(--black-color);
+}
+
+.highlights {
+  color: var(--violet-color);
+  font-weight: 400;
+  font-size: 40px;
+  height: 407px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}

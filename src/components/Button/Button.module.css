@@ -19,6 +19,11 @@
   cursor: pointer;
 }
 
+.secondary {
+  background-color: var(--white-color);
+  cursor: pointer;
+}
+
 .loading {
   background-color: var(--violet-color);
 }
@@ -46,4 +51,14 @@
 
 .success {
   background-color: var(--light-green-color);
+}
+
+.disabled {
+  background-color: var(--grey-color);
+  color: var(--grey-text-color);
+  border-radius: 25px;
+}
+
+.file-loaded {
+  background-color: var(--violet-color);
 }

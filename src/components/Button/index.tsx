@@ -1,7 +1,14 @@
 import type { FC, PropsWithChildren, SyntheticEvent } from 'react';
 import s from './Button.module.css';
 
-export type ButtonAppearance = 'default' | 'loading' | 'error' | 'success';
+export type ButtonAppearance =
+  | 'default'
+  | 'secondary'
+  | 'loading'
+  | 'error'
+  | 'success'
+  | 'disabled'
+  | 'file-loaded';
 
 type ButtonProps = PropsWithChildren & {
   onClick?: (e: SyntheticEvent) => void;

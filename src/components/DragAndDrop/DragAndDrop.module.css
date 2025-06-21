@@ -1,0 +1,15 @@
+.area {
+  align-self: stretch;
+  height: 239px;
+  background-color: var(--light-violet-color);
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.highlight {
+  background-color: var(--light-green-color);
+}

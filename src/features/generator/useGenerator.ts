@@ -14,7 +14,7 @@ export const useGeneratorLogic = () => {
       const url = window.URL.createObjectURL(csvBlob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `report-${Date.now().toString()}.csv`;
+      link.download = `report-${new Date().toISOString().split('T')[0]}.csv`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
