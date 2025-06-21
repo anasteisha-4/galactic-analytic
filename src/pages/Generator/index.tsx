@@ -1,10 +1,8 @@
-import { useState } from 'react';
-import { generate, type GenerateParameters } from '~/api/generate';
+import { type GenerateParameters } from '~/api/generate';
 import loader from '~/assets/icons/loading.svg';
 import { Button, ClearButton } from '~/components';
 import s from './Generator.module.css';
-
-type GeneratePhase = 'default' | 'loading' | 'error' | 'success';
+import { useGeneratorLogic } from '~/features/generator';
 
 export const GeneratorPage = () => {
   const generateParams: GenerateParameters = {
@@ -12,30 +10,8 @@ export const GeneratorPage = () => {
     withErrors: 'on',
     maxSpend: 1000,
   };
-  const [generatePhase, setGeneratePhase] = useState<GeneratePhase>('default');
 
-  const onGenerateClick = async (generateParams: GenerateParameters) => {
-    setGeneratePhase('loading');
-
-    try {
-      const csvBlob = await generate(generateParams);
-      const url = window.URL.createObjectURL(csvBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `report.csv`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      window.URL.revokeObjectURL(url);
-
-      setGeneratePhase('success');
-    } catch {
-      setGeneratePhase('error');
-    }
-  };
-
-  const onClearClick = () => setGeneratePhase('default');
+  const { generatePhase, onGenerateClick, onClearClick } = useGeneratorLogic();
 
   return (
     <main className={s.page}>
