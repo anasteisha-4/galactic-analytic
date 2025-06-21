@@ -1,0 +1,39 @@
+:root {
+  font-family: Roboto, sans-serif;
+  font-size: 30px;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --background-color: #fce2ff;
+  --violet-color: #cb81ff;
+  --white-color: #ffffff;
+  --black-color: #201b10;
+  --grey-color: #c0c0c0;
+  --light-green-color: #d4fae6;
+  --green-color: #2ae881;
+  --orange-color: #ff5f00;
+  --yellow-color: #fce300;
+}
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  color: var(--black-color);
+  background-color: var(--background-color);
+  padding: 40px;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}

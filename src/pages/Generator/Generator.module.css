@@ -1,0 +1,32 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loading,
+.success,
+.error {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.success,
+.error {
+  align-items: center;
+}
+
+.loading {
+  align-items: stretch;
+}
+
+.error-text {
+  color: var(--orange-color);
+}
+
+.button-block {
+  display: flex;
+  gap: 10px;
+}

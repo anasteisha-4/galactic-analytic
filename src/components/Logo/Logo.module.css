@@ -1,0 +1,16 @@
+.logo {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.name {
+  background-color: var(--violet-color);
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 90%;
+  padding: 6.37px;
+  padding-top: 4.77px;
+  text-align: center;
+  vertical-align: center;
+}

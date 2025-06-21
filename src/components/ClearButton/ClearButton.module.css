@@ -1,0 +1,25 @@
+.clear {
+  width: 70px;
+  height: 70px;
+  background-color: var(--black-color);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear:before,
+.clear:after {
+  content: '';
+  position: absolute;
+  width: 26.4px;
+  height: 2px;
+  background: var(--white-color);
+  border-radius: 30px;
+}
+.clear:before {
+  transform: rotate(45deg);
+}
+.clear:after {
+  transform: rotate(-45deg);
+}
