@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Button, ClearButton, DragAndDropArea } from '~/components';
 import { useDragAndDrop } from '~/features/drag-and-drop';
 import { useAnalyticStore } from '~/store';
+import { processNameLength } from '~/utils/process-name-length';
 import s from './Analytic.module.css';
 
 export const AnalyticPage: React.FC = () => {
@@ -71,7 +72,9 @@ export const AnalyticPage: React.FC = () => {
       {phase === 'uploadError' && uploadedFile && (
         <div className={`${s.area} ${s['area-error']}`}>
           <div className={s['button-block']}>
-            <Button appearance="error">{uploadedFile.name}</Button>
+            <Button appearance="error">
+              {processNameLength(uploadedFile.name)}
+            </Button>
             <ClearButton onClick={handleClear} />
           </div>
           <p className={s['error-text']}>упс, не то...</p>
@@ -82,7 +85,9 @@ export const AnalyticPage: React.FC = () => {
         <>
           <div className={`${s.area} ${s['area-success']}`}>
             <div className={s['button-block']}>
-              <Button appearance="file-loaded">{uploadedFile.name}</Button>
+              <Button appearance="file-loaded">
+                {processNameLength(uploadedFile.name)}
+              </Button>
               <ClearButton onClick={handleClear} />
             </div>
             <p className={s['file-loaded-text']}>файл загружен!</p>
