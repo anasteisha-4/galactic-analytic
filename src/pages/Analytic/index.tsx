@@ -1,15 +1,28 @@
 import React, { useEffect, useRef } from 'react';
-import { Button, ClearButton, DragAndDropArea } from '~/components';
+import loader from '~/assets/icons/loading.svg';
+import {
+  AnalyticResult,
+  Button,
+  ClearButton,
+  DragAndDropArea,
+} from '~/components';
 import { useDragAndDrop } from '~/features/drag-and-drop';
 import { useAnalyticStore } from '~/store';
 import { processNameLength } from '~/utils/process-name-length';
 import s from './Analytic.module.css';
+import { isAnalyticResults } from '~/utils/is-analytic-results';
 
 export const AnalyticPage: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { phase, uploadedFile, handleFileSelection, resetAnalytic } =
-    useAnalyticStore();
+  const {
+    phase,
+    uploadedFile,
+    analyticResults,
+    handleFileSelection,
+    processAnalytics,
+    resetAnalytic,
+  } = useAnalyticStore();
 
   const { isDragging, droppedFiles, dragAndDropProps, clearDroppedFiles } =
     useDragAndDrop();
@@ -39,6 +52,12 @@ export const AnalyticPage: React.FC = () => {
     clearDroppedFiles();
   };
 
+  const handleStartAnalytics = () => {
+    if (uploadedFile) {
+      processAnalytics(uploadedFile);
+    }
+  };
+
   return (
     <main className={s.page}>
       <h1 className={s.title}>
@@ -63,25 +82,26 @@ export const AnalyticPage: React.FC = () => {
             >
               Загрузить файл
             </Button>
-            <p>или перетащите сюда</p>
+            <p className={s['default-text']}>или перетащите сюда</p>
           </DragAndDropArea>
           <Button appearance="disabled">Отправить</Button>
         </>
       )}
 
-      {phase === 'uploadError' && uploadedFile && (
-        <div className={`${s.area} ${s['area-error']}`}>
-          <div className={s['button-block']}>
-            <Button appearance="error">
-              {processNameLength(uploadedFile.name)}
-            </Button>
-            <ClearButton onClick={handleClear} />
+      {(phase === 'uploadError' || phase === 'parsingError') &&
+        uploadedFile !== null && (
+          <div className={`${s.area} ${s['area-error']}`}>
+            <div className={s['button-block']}>
+              <Button appearance="error">
+                {processNameLength(uploadedFile.name)}
+              </Button>
+              <ClearButton onClick={handleClear} />
+            </div>
+            <p className={s['error-text']}>упс, не то...</p>
           </div>
-          <p className={s['error-text']}>упс, не то...</p>
-        </div>
-      )}
+        )}
 
-      {phase === 'fileLoaded' && uploadedFile && (
+      {phase === 'fileLoaded' && uploadedFile !== null && (
         <>
           <div className={`${s.area} ${s['area-success']}`}>
             <div className={s['button-block']}>
@@ -90,15 +110,51 @@ export const AnalyticPage: React.FC = () => {
               </Button>
               <ClearButton onClick={handleClear} />
             </div>
-            <p className={s['file-loaded-text']}>файл загружен!</p>
+            <p className={s['default-text']}>файл загружен!</p>
           </div>
-          <Button>Отправить</Button>
+          <Button onClick={handleStartAnalytics}>Отправить</Button>
         </>
+      )}
+
+      {phase === 'parsing' && (
+        <div className={s['with-analytic']}>
+          <div className={`${s.area} ${s['area-parsing']}`}>
+            <div className={s['loading-content']}>
+              <Button appearance="loading">
+                <img src={loader} />
+              </Button>
+              <p className={s['default-text']}>идёт парсинг файла</p>
+            </div>
+          </div>
+
+          {isAnalyticResults(analyticResults) && (
+            <AnalyticResult analyticResults={analyticResults} />
+          )}
+        </div>
+      )}
+
+      {phase === 'analyticComplete' && uploadedFile !== null && (
+        <div className={s['with-analytic']}>
+          <div className={`${s.area} ${s['area-success']}`}>
+            <div className={s['button-block']}>
+              <Button appearance="success">
+                {processNameLength(uploadedFile.name)}
+              </Button>
+              <ClearButton onClick={handleClear} />
+            </div>
+            <p className={s['default-text']}>готово!</p>
+          </div>
+
+          {analyticResults !== null && (
+            <AnalyticResult analyticResults={analyticResults} />
+          )}
+        </div>
       )}
 
       {(phase === 'start' ||
         phase === 'fileLoaded' ||
-        phase === 'uploadError') && (
+        phase === 'uploadError' ||
+        phase === 'parsingError') && (
         <div className={s.highlights}>
           Здесь
           <br />

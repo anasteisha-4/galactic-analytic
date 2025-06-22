@@ -35,6 +35,8 @@ h6,
 p {
   font-size: inherit;
   font-weight: inherit;
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 ul,

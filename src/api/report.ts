@@ -1,16 +1,16 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-export type GenerateParameters = {
+export type ReportParameters = {
   size: number;
   withErrors?: 'on' | 'off';
   maxSpend?: number;
 };
 
-export async function generate({
+export async function report({
   size,
   withErrors = 'off',
   maxSpend = 1000,
-}: GenerateParameters): Promise<Blob> {
+}: ReportParameters): Promise<Blob> {
   const url = new URL(`${BASE_URL}/report`);
   url.searchParams.append('size', size.toString());
   url.searchParams.append('withErrors', withErrors);

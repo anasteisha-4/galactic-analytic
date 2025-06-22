@@ -1,16 +1,16 @@
 import { useCallback, useState } from 'react';
-import { generate, type GenerateParameters } from '~/api/generate';
+import { report, type ReportParameters } from '~/api/report';
 
 export type GeneratePhase = 'default' | 'loading' | 'error' | 'success';
 
-export const useGeneratorLogic = () => {
+export const useGenerator = () => {
   const [generatePhase, setGeneratePhase] = useState<GeneratePhase>('default');
 
-  const onGenerateClick = useCallback(async (params: GenerateParameters) => {
+  const onGenerateClick = useCallback(async (params: ReportParameters) => {
     setGeneratePhase('loading');
 
     try {
-      const csvBlob = await generate(params);
+      const csvBlob = await report(params);
       const url = window.URL.createObjectURL(csvBlob);
       const link = document.createElement('a');
       link.href = url;

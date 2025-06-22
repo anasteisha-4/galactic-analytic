@@ -1,31 +1,25 @@
 import { create } from 'zustand';
+import { aggregate } from '~/api/aggregate';
+import { type AnalyticData } from '~/utils/is-analytic-results';
 
 export type AnalyticPagePhase =
   | 'start'
   | 'uploadError'
   | 'fileLoaded'
   | 'parsing'
+  | 'parsingError'
   | 'analyticComplete';
-
-export type AnalyticData = {
-  total_spend_galactic: number;
-  rows_affected: number;
-  less_spent_at: number;
-  big_spent_civ: 'humans' | 'blobs' | 'monsters';
-  less_spent_civ: 'humans' | 'blobs' | 'monsters';
-  big_spent_at: number;
-  big_spent_value: number;
-  average_spend_galactic: number;
-};
 
 type AnalyticState = {
   phase: AnalyticPagePhase;
   uploadedFile: File | null;
+  analyticResults: AnalyticData | null;
 
   setPhase: (phase: AnalyticPagePhase) => void;
   setUploadedFile: (file: File | null) => void;
 
   handleFileSelection: (file: File) => void;
+  processAnalytics: (file: File) => Promise<void>;
   resetAnalytic: () => void;
 };
 
@@ -34,6 +28,7 @@ const EXPECTED_HEADERS = ['id', 'civ', 'developer_id', 'date', 'spend'];
 export const useAnalyticStore = create<AnalyticState>((set) => ({
   phase: 'start',
   uploadedFile: null,
+  analyticResults: null,
 
   setPhase: (phase) => set({ phase }),
   setUploadedFile: (file) => set({ uploadedFile: file }),
@@ -80,6 +75,47 @@ export const useAnalyticStore = create<AnalyticState>((set) => ({
       const blobSlice = file.slice(0, 1024);
       reader.readAsText(blobSlice);
     });
+  },
+
+  processAnalytics: async (file: File) => {
+    set({ phase: 'parsing', analyticResults: null });
+    const rows = 1000;
+    let analyticComplete = false;
+
+    try {
+      const reader = await aggregate({ rows, file });
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (!analyticComplete) {
+        const { done, value } = await reader.read();
+        if (done) {
+          if (buffer.trim()) {
+            const data = JSON.parse(buffer);
+            set({ analyticResults: data });
+          }
+          set({ phase: 'analyticComplete' });
+          analyticComplete = true;
+        } else {
+          buffer += decoder.decode(value, { stream: true });
+
+          let newlineIndex = buffer.indexOf('\n');
+          while (newlineIndex !== -1) {
+            const jsonLine = buffer.slice(0, newlineIndex).trim();
+            buffer = buffer.slice(newlineIndex + 1);
+            if (jsonLine) {
+              const partialData: AnalyticData = JSON.parse(jsonLine);
+              set({ analyticResults: partialData });
+            }
+            newlineIndex = buffer.indexOf('\n');
+          }
+        }
+      }
+    } catch {
+      set({
+        phase: 'parsingError',
+      });
+    }
   },
 
   resetAnalytic: () =>

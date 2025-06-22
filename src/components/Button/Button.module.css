@@ -11,17 +11,20 @@
   cursor: default;
 }
 
+.default:hover,
+.secondary:hover {
+  cursor: pointer;
+}
+
 .default {
   height: 80px;
   background-color: var(--green-color);
   font-weight: 500;
   border-radius: 25px;
-  cursor: pointer;
 }
 
 .secondary {
   background-color: var(--white-color);
-  cursor: pointer;
 }
 
 .loading {

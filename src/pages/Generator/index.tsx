@@ -1,17 +1,17 @@
-import { type GenerateParameters } from '~/api/generate';
+import { type ReportParameters } from '~/api/report';
 import loader from '~/assets/icons/loading.svg';
 import { Button, ClearButton } from '~/components';
+import { useGenerator } from '~/features/generator';
 import s from './Generator.module.css';
-import { useGeneratorLogic } from '~/features/generator';
 
 export const GeneratorPage = () => {
-  const generateParams: GenerateParameters = {
-    size: 0.1,
+  const generateParams: ReportParameters = {
+    size: 0.01,
     withErrors: 'on',
     maxSpend: 1000,
   };
 
-  const { generatePhase, onGenerateClick, onClearClick } = useGeneratorLogic();
+  const { generatePhase, onGenerateClick, onClearClick } = useGenerator();
 
   return (
     <main className={s.page}>

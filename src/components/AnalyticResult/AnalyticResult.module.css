@@ -1,0 +1,29 @@
+.results {
+  align-self: stretch;
+  display: grid;
+  align-content: stretch;
+  row-gap: 10px;
+  column-gap: 39px;
+  grid-template-columns: repeat(2, auto);
+}
+
+.result-item {
+  background-color: var(--white-color);
+  height: 117.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+}
+
+.data {
+  font-weight: medium;
+  font-size: 40px;
+  height: 47px;
+}
+
+.item-name {
+  font-size: 20px;
+}
