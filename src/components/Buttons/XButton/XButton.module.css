@@ -1,4 +1,4 @@
-.clear {
+.button {
   width: 70px;
   height: 70px;
   background-color: var(--black-color);
@@ -9,8 +9,8 @@
   cursor: pointer;
 }
 
-.clear:before,
-.clear:after {
+.button:before,
+.button:after {
   content: '';
   position: absolute;
   width: 26.4px;
@@ -18,9 +18,9 @@
   background: var(--white-color);
   border-radius: 30px;
 }
-.clear:before {
+.button:before {
   transform: rotate(45deg);
 }
-.clear:after {
+.button:after {
   transform: rotate(-45deg);
 }

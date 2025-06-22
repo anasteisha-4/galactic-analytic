@@ -12,15 +12,25 @@
 }
 
 .default:hover,
-.secondary:hover {
+.secondary:hover,
+.clear:hover {
   cursor: pointer;
 }
 
-.default {
+.default,
+.clear {
   height: 80px;
-  background-color: var(--green-color);
   font-weight: 500;
   border-radius: 25px;
+}
+
+.default {
+  background-color: var(--green-color);
+}
+
+.clear {
+  background-color: var(--black-color);
+  color: var(--white-color);
 }
 
 .secondary {

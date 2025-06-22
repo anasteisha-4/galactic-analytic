@@ -1,16 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import loader from '~/assets/icons/loading.svg';
-import {
-  AnalyticResult,
-  Button,
-  ClearButton,
-  DragAndDropArea,
-} from '~/components';
+import { AnalyticResult, Button, DragAndDropArea, XButton } from '~/components';
 import { useDragAndDrop } from '~/features/drag-and-drop';
 import { useAnalyticStore } from '~/store';
 import { processNameLength } from '~/utils/process-name-length';
 import s from './Analytic.module.css';
-import { isAnalyticResults } from '~/utils/is-analytic-results';
 
 export const AnalyticPage: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -95,7 +89,7 @@ export const AnalyticPage: React.FC = () => {
               <Button appearance="error">
                 {processNameLength(uploadedFile.name)}
               </Button>
-              <ClearButton onClick={handleClear} />
+              <XButton onClick={handleClear} />
             </div>
             <p className={s['error-text']}>упс, не то...</p>
           </div>
@@ -108,7 +102,7 @@ export const AnalyticPage: React.FC = () => {
               <Button appearance="file-loaded">
                 {processNameLength(uploadedFile.name)}
               </Button>
-              <ClearButton onClick={handleClear} />
+              <XButton onClick={handleClear} />
             </div>
             <p className={s['default-text']}>файл загружен!</p>
           </div>
@@ -127,7 +121,7 @@ export const AnalyticPage: React.FC = () => {
             </div>
           </div>
 
-          {isAnalyticResults(analyticResults) && (
+          {analyticResults !== null && (
             <AnalyticResult analyticResults={analyticResults} />
           )}
         </div>
@@ -140,7 +134,7 @@ export const AnalyticPage: React.FC = () => {
               <Button appearance="success">
                 {processNameLength(uploadedFile.name)}
               </Button>
-              <ClearButton onClick={handleClear} />
+              <XButton onClick={handleClear} />
             </div>
             <p className={s['default-text']}>готово!</p>
           </div>

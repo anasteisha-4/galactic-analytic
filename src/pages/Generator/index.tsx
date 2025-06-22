@@ -1,6 +1,6 @@
 import { type ReportParameters } from '~/api/report';
 import loader from '~/assets/icons/loading.svg';
-import { Button, ClearButton } from '~/components';
+import { Button, XButton } from '~/components';
 import { useGenerator } from '~/features/generator';
 import s from './Generator.module.css';
 
@@ -29,7 +29,7 @@ export const GeneratorPage = () => {
             <Button appearance={generatePhase} disabled>
               Ошибка
             </Button>
-            <ClearButton onClick={onClearClick} />
+            <XButton onClick={onClearClick} />
           </div>
           <p className={s['error-text']}>упс, не то...</p>
         </div>
@@ -39,7 +39,7 @@ export const GeneratorPage = () => {
             <Button appearance={generatePhase} disabled>
               Done!
             </Button>
-            <ClearButton onClick={onClearClick} />
+            <XButton onClick={onClearClick} />
           </div>
           <p>файл сгенерирован!</p>
         </div>

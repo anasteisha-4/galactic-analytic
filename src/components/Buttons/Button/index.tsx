@@ -8,7 +8,8 @@ export type ButtonAppearance =
   | 'error'
   | 'success'
   | 'disabled'
-  | 'file-loaded';
+  | 'file-loaded'
+  | 'clear';
 
 type ButtonProps = PropsWithChildren & {
   onClick?: (e: SyntheticEvent) => void;

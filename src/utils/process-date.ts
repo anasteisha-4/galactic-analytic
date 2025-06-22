@@ -13,8 +13,9 @@ const monthsMap = [
   'декабря',
 ];
 
-export const processDate = (day: number) => {
+export const processDay = (day: number) => {
   const date = new Date(new Date(2025, 0).setDate(day));
-  if (!day) console.log(day);
   return `${date.getDate()} ${monthsMap[date.getMonth()]}`;
 };
+
+export const processDate = (date: Date) => date.toLocaleDateString();

@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { type AnalyticData } from '~/utils/is-analytic-results';
-import { processDate } from '~/utils/process-date';
+import { processDay } from '~/utils/process-date';
 import s from './AnalyticResult.module.css';
 
 type AnalyticResultProps = {
@@ -26,11 +26,11 @@ export const AnalyticResult: FC<AnalyticResultProps> = ({
       <p className={s['item-name']}>количество обработанных записей</p>
     </div>
     <div className={s['result-item']}>
-      <p className={s.data}>{processDate(analyticResults.big_spent_at)}</p>
+      <p className={s.data}>{processDay(analyticResults.big_spent_at)}</p>
       <p className={s['item-name']}>день года с максимальными расходами</p>
     </div>
     <div className={s['result-item']}>
-      <p className={s.data}>{processDate(analyticResults.less_spent_at)}</p>
+      <p className={s.data}>{processDay(analyticResults.less_spent_at)}</p>
       <p className={s['item-name']}>день года с минимальными расходами</p>
     </div>
     <div className={s['result-item']}>
