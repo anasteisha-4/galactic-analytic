@@ -1,20 +1,25 @@
-import React, { useRef } from 'react';
-import { Button, ClearButton } from '~/components';
-import { DragAndDropArea } from '~/components/DragAndDrop';
+import React, { useEffect, useRef } from 'react';
+import { Button, ClearButton, DragAndDropArea } from '~/components';
+import { useDragAndDrop } from '~/features/drag-and-drop';
 import { useAnalyticStore } from '~/store';
 import s from './Analytic.module.css';
 
 export const AnalyticPage: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const {
-    phase,
-    uploadedFile,
-    highlightedDropZone,
-    setHighlightedDropZone,
-    handleFileSelection,
-    resetAnalytic,
-  } = useAnalyticStore();
+  const { phase, uploadedFile, handleFileSelection, resetAnalytic } =
+    useAnalyticStore();
+
+  const { isDragging, droppedFiles, dragAndDropProps, clearDroppedFiles } =
+    useDragAndDrop();
+
+  useEffect(() => {
+    if (droppedFiles.length > 0) {
+      const file = droppedFiles[0];
+      handleFileSelection(file);
+      clearDroppedFiles();
+    }
+  }, [droppedFiles, handleFileSelection, clearDroppedFiles]);
 
   const handleFileInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -25,16 +30,12 @@ export const AnalyticPage: React.FC = () => {
     }
   };
 
-  const handleFileDrop = (file: File) => {
-    setHighlightedDropZone(false);
-    handleFileSelection(file);
-  };
-
   const handleClear = () => {
     resetAnalytic();
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    clearDroppedFiles();
   };
 
   return (
@@ -47,18 +48,7 @@ export const AnalyticPage: React.FC = () => {
 
       {phase === 'start' && (
         <>
-          <DragAndDropArea
-            onFileDrop={handleFileDrop}
-            isHighlighted={highlightedDropZone}
-            onDragEnter={() => setHighlightedDropZone(true)}
-            onDragLeave={() => setHighlightedDropZone(false)}
-            onDragOver={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setHighlightedDropZone(true);
-            }}
-            onDrop={() => setHighlightedDropZone(false)}
-          >
+          <DragAndDropArea isHighlighted={isDragging} {...dragAndDropProps}>
             <input
               type="file"
               accept=".csv"

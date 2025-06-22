@@ -2,7 +2,6 @@ import { create } from 'zustand';
 
 export type AnalyticPagePhase =
   | 'start'
-  | 'uploading'
   | 'uploadError'
   | 'fileLoaded'
   | 'parsing'
@@ -22,11 +21,9 @@ export type AnalyticData = {
 type AnalyticState = {
   phase: AnalyticPagePhase;
   uploadedFile: File | null;
-  highlightedDropZone: boolean;
 
   setPhase: (phase: AnalyticPagePhase) => void;
   setUploadedFile: (file: File | null) => void;
-  setHighlightedDropZone: (highlight: boolean) => void;
 
   handleFileSelection: (file: File) => void;
   resetAnalytic: () => void;
@@ -35,12 +32,9 @@ type AnalyticState = {
 export const useAnalyticStore = create<AnalyticState>((set) => ({
   phase: 'start',
   uploadedFile: null,
-  highlightedDropZone: false,
 
   setPhase: (phase) => set({ phase }),
   setUploadedFile: (file) => set({ uploadedFile: file }),
-  setHighlightedDropZone: (highlight) =>
-    set({ highlightedDropZone: highlight }),
 
   handleFileSelection: (file: File) => {
     if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
@@ -57,6 +51,5 @@ export const useAnalyticStore = create<AnalyticState>((set) => ({
     set({
       phase: 'start',
       uploadedFile: null,
-      highlightedDropZone: false,
     }),
 }));
