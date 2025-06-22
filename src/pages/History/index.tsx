@@ -45,9 +45,11 @@ export const HistoryPage: FC = () => {
 
       <div className={s.actions}>
         <Button onClick={handleGenerateMoreClick}>Сгенерировать больше</Button>
-        <Button onClick={clearHistory} appearance="clear">
-          Очистить всё
-        </Button>
+        {historyEntries.length > 0 && (
+          <Button onClick={clearHistory} appearance="clear">
+            Очистить всё
+          </Button>
+        )}
       </div>
 
       {selectedEntry?.analyticResults && (
