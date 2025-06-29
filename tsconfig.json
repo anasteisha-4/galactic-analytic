@@ -10,22 +10,20 @@
 
     "moduleResolution": "bundler",
     "isolatedModules": true,
-    "moduleDetection": "force", 
+    "moduleDetection": "force",
     "jsx": "react-jsx",
 
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true, 
+    "noUncheckedSideEffectImports": true,
     "baseUrl": "./src",
     "paths": {
       "~/*": ["*"],
       "package.json": ["./package.json"]
     }
   },
-  "include": ["src/**/*"],
-  "references": [
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["src/**/*", "e2e"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
